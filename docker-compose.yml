@@ -1,0 +1,19 @@
+version: "3.9"
+services:
+  tacheto:
+    build: .
+    image: swaxnet/tacheto:latest
+    container_name: tacheto
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - SESSION_SECRET=${SESSION_SECRET:-change_this_secret}
+      - UPLOAD_DIR=uploads
+      - DB_FILE=data/tacheto.db
+      - ADMIN_DEFAULT_EMAIL=${ADMIN_DEFAULT_EMAIL:-admin@tacheto.local}
+      - ADMIN_DEFAULT_PASSWORD=${ADMIN_DEFAULT_PASSWORD:-admin123}
+    volumes:
+      - ./data:/app/data
+      - ./uploads:/app/uploads
+    restart: unless-stopped 
