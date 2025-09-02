@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: tacheto
+    env: docker
+    plan: starter
+    autoDeploy: true
+    region: oregon
+    rootDir: .
+    dockerCommand: null
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: SESSION_SECRET
+        value: change_this_secret
+      - key: UPLOAD_DIR
+        value: uploads
+      - key: DB_FILE
+        value: data/tacheto.db
+      - key: ADMIN_DEFAULT_EMAIL
+        value: admin@tacheto.local
+      - key: ADMIN_DEFAULT_PASSWORD
+        value: admin123
+    disk:
+      name: tacheto-data
+      mountPath: /app/data
+      sizeGB: 1
+    disks:
+      - name: tacheto-uploads
+        mountPath: /app/uploads
+        sizeGB: 1 

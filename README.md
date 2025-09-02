@@ -59,6 +59,20 @@ docker compose up -d --build
 Pushing to `main` builds and publishes a Docker image to GHCR:
 - Image: `ghcr.io/<owner>/<repo>:latest`
 
+## Deploy to Render
+- One-click (setup envs and disks after create):
+  - Go to Render → New → Blueprint → connect this repo (uses `render.yaml`)
+- Or create a Web Service from this repo using the `Dockerfile` and add two disks:
+  - Disk 1: name `tacheto-data`, mount `/app/data`, size ≥ 1GB
+  - Disk 2: name `tacheto-uploads`, mount `/app/uploads`, size ≥ 1GB
+- Environment variables:
+  - `PORT=3000`
+  - `SESSION_SECRET=your_secret`
+  - `UPLOAD_DIR=uploads`
+  - `DB_FILE=data/tacheto.db`
+  - `ADMIN_DEFAULT_EMAIL=admin@tacheto.local`
+  - `ADMIN_DEFAULT_PASSWORD=admin123`
+
 ## Persistence
 - Database file: `data/tacheto.db`
 - Uploaded PDFs: `uploads/`
