@@ -37,4 +37,4 @@ data/
 uploads/
 
 # Lock files
-package-lock.json 
+# keep lockfile committed for reproducible builds
