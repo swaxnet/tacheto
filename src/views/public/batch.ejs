@@ -1,0 +1,54 @@
+<section class="card">
+	<div class="card-header">
+		<h1><%= batch.title %> - <%= batch.form_level %> (<%= batch.year %>)</h1>
+		<div class="actions">
+			<% if (batch.summary_pdf_path) { %>
+				<a class="btn" target="_blank" href="/<%= batch.summary_pdf_path %>">Fungua Matokeo ya Jumla (PDF)</a>
+				<a class="btn btn-secondary" download href="/<%= batch.summary_pdf_path %>">Pakua Matokeo ya Jumla (PDF)</a>
+			<% } else { %>
+				<span class="muted">Hakuna PDF ya matokeo ya jumla iliyopakiwa.</span>
+			<% } %>
+		</div>
+	</div>
+
+	<h2 class="mt">Matokeo kwa Shule</h2>
+	<form class="search" method="get" action="">
+		<input type="text" name="q" value="<%= search %>" placeholder="Tafuta shule...">
+		<button class="btn" type="submit">Tafuta</button>
+	</form>
+	<div class="table-responsive">
+		<table>
+			<thead>
+				<tr>
+					<th>Shule</th>
+					<th>Kodi</th>
+					<th>Hatua</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% if (!schools || schools.length === 0) { %>
+					<tr><td colspan="3">Hakuna matokeo ya shule.</td></tr>
+				<% } %>
+				<% (schools || []).forEach(r => { %>
+					<tr>
+						<td><%= r.school_name %></td>
+						<td><%= r.school_code %></td>
+						<td><div class="actions">
+							<a class="btn btn-sm" target="_blank" href="/<%= r.pdf_path %>">Fungua</a>
+							<a class="btn btn-sm btn-secondary" download href="/<%= r.pdf_path %>">Pakua</a>
+						</div></td>
+					</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+	<div class="pagination">
+		<% if (pagination.hasPrev) { %>
+			<a href="<%= pagination.prevUrl %>">Ukurasa uliopita</a>
+		<% } %>
+		<span>Ukurasa <%= pagination.page %> kati ya <%= pagination.totalPages %></span>
+		<% if (pagination.hasNext) { %>
+			<a href="<%= pagination.nextUrl %>">Ukurasa unaofuata</a>
+		<% } %>
+	</div>
+</section> 

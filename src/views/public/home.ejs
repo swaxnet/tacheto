@@ -1,0 +1,43 @@
+<section class="card">
+	<div class="card-header">
+		<h1>Matokeo</h1>
+		<form class="search" method="get" action="/">
+			<input type="text" name="q" value="<%= search %>" placeholder="Tafuta (mfano: Kidato, mwaka, kichwa)">
+			<button class="btn" type="submit">Tafuta</button>
+		</form>
+	</div>
+	<div class="table-responsive">
+		<table>
+			<thead>
+				<tr>
+					<th>Kidato</th>
+					<th>Mwaka</th>
+					<th>Kichwa</th>
+					<th>Hatua</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% if (!batches || batches.length === 0) { %>
+					<tr><td colspan="4">Hakuna matokeo kwa sasa.</td></tr>
+				<% } %>
+				<% (batches || []).forEach(b => { %>
+					<tr>
+						<td><%= b.form_level %></td>
+						<td><%= b.year %></td>
+						<td><%= b.title %></td>
+						<td><a class="btn btn-sm" href="/batch/<%= b.id %>">Tazama</a></td>
+					</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+	<div class="pagination">
+		<% if (pagination.hasPrev) { %>
+			<a href="<%= pagination.prevUrl %>">Ukurasa uliopita</a>
+		<% } %>
+		<span>Ukurasa <%= pagination.page %> kati ya <%= pagination.totalPages %></span>
+		<% if (pagination.hasNext) { %>
+			<a href="<%= pagination.nextUrl %>">Ukurasa unaofuata</a>
+		<% } %>
+	</div>
+</section> 

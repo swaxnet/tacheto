@@ -1,0 +1,38 @@
+*{box-sizing:border-box}html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:#0b1220;color:#e6e9ef}
+.container{max-width:1100px;margin:0 auto;padding:16px}
+.navbar{background:#0f172a;border-bottom:1px solid #1f2937;position:sticky;top:0;z-index:10}
+.nav-content{display:flex;align-items:center;justify-content:space-between}
+.navbar a{color:#e6e9ef;text-decoration:none;margin:0 8px}
+.brand{font-weight:700;font-size:20px}
+.footer{border-top:1px solid #1f2937;margin-top:32px;padding:16px 0;color:#9aa4b2}
+.card{background:#111827;border:1px solid #1f2937;border-radius:12px;padding:16px;margin-top:16px}
+.card-header{display:flex;flex-wrap:wrap;align-items:center;gap:12px;justify-content:space-between;margin-bottom:12px}
+.card-narrow{max-width:420px;margin:32px auto}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.stat{background:#0f172a;border:1px solid #1f2937;border-radius:10px;padding:16px}
+.stat-number{font-size:28px;font-weight:700}
+.stat-label{color:#9aa4b2}
+.table-responsive{overflow:auto}
+table{width:100%;border-collapse:collapse}
+th,td{border-bottom:1px solid #1f2937;padding:10px 8px;text-align:left}
+th{color:#9aa4b2;font-weight:600}
+.nowrap{white-space:nowrap}
+.search{display:flex;gap:8px;align-items:center}
+/* forms */
+.card form{display:flex;flex-direction:column;gap:12px}
+.card form label{display:flex;flex-direction:column;gap:6px;width:100%}
+input[type=text],input[type=email],input[type=password],input[type=number],select{background:#0b1220;border:1px solid #1f2937;color:#e6e9ef;padding:10px 12px;border-radius:8px;min-width:0;width:100%}
+input::placeholder{color:#64748b}
+input[type=file]{color:#e6e9ef}
+.btn{background:#2563eb;color:#fff;border:none;padding:10px 14px;border-radius:8px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:hover{background:#1d4ed8}
+.btn-secondary{background:#374151}
+.btn-danger{background:#dc2626}
+.btn-sm{padding:6px 10px;font-size:14px}
+.error{color:#fca5a5}
+.muted{color:#9aa4b2}
+.mt{margin-top:12px}
+.inline{display:flex;gap:8px;flex-wrap:wrap}
+.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.actions .btn{margin:0}
+@media (max-width:768px){.grid-3{grid-template-columns:1fr}.nav-content{flex-direction:row}.card{padding:12px}.container{padding:12px}th,td{padding:8px 6px}table{font-size:14px}} 

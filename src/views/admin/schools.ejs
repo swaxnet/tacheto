@@ -1,0 +1,31 @@
+<section class="card">
+	<div class="card-header">
+		<h1>Shule</h1>
+		<form class="inline" method="post" action="/admin/schools">
+			<input type="text" name="name" placeholder="Jina la shule" required />
+			<input type="text" name="code" placeholder="Code (unique)" required />
+			<button class="btn" type="submit">Ongeza</button>
+		</form>
+	</div>
+	<div class="table-responsive">
+		<table>
+			<thead><tr><th>Jina</th><th>Code</th><th>Hatua</th></tr></thead>
+			<tbody>
+				<% if (!schools || schools.length === 0) { %>
+					<tr><td colspan="3">Hakuna shule.</td></tr>
+				<% } %>
+				<% (schools || []).forEach(s => { %>
+					<tr>
+						<td><%= s.name %></td>
+						<td><%= s.code %></td>
+						<td>
+							<form method="post" action="/admin/schools/<%= s.id %>/delete">
+								<button class="btn btn-sm btn-danger" type="submit">Futa</button>
+							</form>
+						</td>
+					</tr>
+				<% }) %>
+			</tbody>
+		</table>
+	</div>
+</section> 

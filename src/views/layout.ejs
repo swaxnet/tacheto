@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="sw">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title><%= title || 'Tacheto' %></title>
+	<link rel="stylesheet" href="/css/styles.css" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+	<header class="navbar">
+		<div class="container nav-content">
+			<a class="brand" href="/">Tacheto</a>
+			<nav>
+				<a href="/">Matokeo</a>
+				<% if (authUser && authUser.role === 'admin') { %>
+					<a href="/admin">Admin</a>
+					<form method="post" action="/auth/logout" style="display:inline"><button class="btn btn-sm" type="submit">Logout</button></form>
+				<% } else { %>
+					<a href="/auth/login">Admin</a>
+				<% } %>
+			</nav>
+		</div>
+	</header>
+	<main class="container">
+		<%- body %>
+	</main>
+	<footer class="footer">
+		<div class="container">
+			<p>Copyright © <%= new Date().getFullYear() %> Senklink | Partner: Swaxnet</p>
+		</div>
+	</footer>
+</body>
+</html> 
