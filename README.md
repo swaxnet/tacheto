@@ -1,81 +1,82 @@
 # Tacheto Results Portal
 
-Responsive results portal with admin to manage schools and upload PDF results.
+Responsive results portal with admin for managing schools and PDF results.
 
-## Features
-- Admin login (email/password)
-- Manage schools
-- Create result batches (Kidato + mwaka + kichwa)
-- Upload overall summary PDF per batch
-- Upload per-school PDFs per batch
-- Public listing with search and pagination
-- Mobile-friendly UI
+## Getting Started (Local)
 
-## Tech Stack
-- Node.js (Express 4), EJS, CSS
-- SQLite (data/tacheto.db), Sessions via connect-sqlite3
-- Multer for PDF uploads
+1. Create `.env`:
 
-## Quick start (local)
-```bash
-npm install
-npm run init:db
-npm run dev
-# Open http://localhost:3000
-```
-Admin login:
-- Email: admin@tacheto.local
-- Password: admin123
-
-## Environment
-Copy `.env.example` to `.env` and adjust:
 ```
 PORT=3000
-SESSION_SECRET=change_this_secret
+SESSION_SECRET=wekenenosiri_lenye_utu
 UPLOAD_DIR=uploads
-DB_FILE=data/tacheto.db
+
+# MySQL
+MYSQL_HOST=127.0.0.1
+MYSQL_PORT=3306
+MYSQL_USER=root
+MYSQL_PASSWORD=yourpassword
+MYSQL_DATABASE=tacheto
+
+# Seed admin
 ADMIN_DEFAULT_EMAIL=admin@tacheto.local
 ADMIN_DEFAULT_PASSWORD=admin123
 ```
 
-## Docker
-Build and run with Docker:
-```bash
-docker build -t swaxnet/tacheto:latest .
-docker run -d --name tacheto -p 3000:3000 \
- -v $(pwd)/data:/app/data \
- -v $(pwd)/uploads:/app/uploads \
- -e SESSION_SECRET=change_this \
- -e ADMIN_DEFAULT_EMAIL=admin@tacheto.local \
- -e ADMIN_DEFAULT_PASSWORD=admin123 \
- swaxnet/tacheto:latest
+2. Install dependencies
+
 ```
-Or with docker compose:
-```bash
-docker compose up -d --build
+npm install
 ```
 
-## GitHub Actions (GHCR)
-Pushing to `main` builds and publishes a Docker image to GHCR:
-- Image: `ghcr.io/<owner>/<repo>:latest`
+3. Initialize DB schema and seed admin
 
-## Deploy to Render
-- One-click (setup envs and disks after create):
-  - Go to Render → New → Blueprint → connect this repo (uses `render.yaml`)
-- Or create a Web Service from this repo using the `Dockerfile` and add two disks:
-  - Disk 1: name `tacheto-data`, mount `/app/data`, size ≥ 1GB
-  - Disk 2: name `tacheto-uploads`, mount `/app/uploads`, size ≥ 1GB
-- Environment variables:
-  - `PORT=3000`
-  - `SESSION_SECRET=your_secret`
-  - `UPLOAD_DIR=uploads`
-  - `DB_FILE=data/tacheto.db`
-  - `ADMIN_DEFAULT_EMAIL=admin@tacheto.local`
-  - `ADMIN_DEFAULT_PASSWORD=admin123`
+```
+npm run init:db
+```
 
-## Persistence
-- Database file: `data/tacheto.db`
-- Uploaded PDFs: `uploads/`
+4. Start server
 
-## License
-MIT
+```
+npm run dev
+```
+
+## Docker Compose (local)
+
+`docker-compose.yml` can be adapted to include a MySQL service. Example:
+
+```yaml
+services:
+  db:
+    image: mysql:8
+    environment:
+      - MYSQL_ROOT_PASSWORD=yourpassword
+      - MYSQL_DATABASE=tacheto
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+  app:
+    build: .
+    environment:
+      - PORT=3000
+      - SESSION_SECRET=change_this_secret
+      - UPLOAD_DIR=uploads
+      - MYSQL_HOST=db
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=yourpassword
+      - MYSQL_DATABASE=tacheto
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+volumes:
+  dbdata:
+```
+
+## Deploy (Render)
+
+- Set environment variables for MySQL (use Render MySQL or external provider)
+- Ensure disks for `/app/uploads` are attached for PDFs persistence
+- Trigger `npm run init:db` on first deploy if DB is empty

@@ -32,8 +32,7 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Project data and uploads
-data/
+# Project uploads
 uploads/
 
 # Lock files

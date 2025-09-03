@@ -3,7 +3,7 @@ const fs = require('fs');
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const SQLiteStore = require('connect-sqlite3')(session);
+const MySQLStore = require('express-mysql-session')(session);
 const expressLayouts = require('express-ejs-layouts');
 require('dotenv').config();
 
@@ -32,9 +32,20 @@ app.use('/uploads', express.static(path.join(__dirname, process.env.UPLOAD_DIR |
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+const mysqlSessionOptions = {
+  host: process.env.MYSQL_HOST,
+  port: parseInt(process.env.MYSQL_PORT || '3306', 10),
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+  clearExpired: true,
+  checkExpirationInterval: 15 * 60 * 1000,
+  expiration: 7 * 24 * 60 * 60 * 1000,
+};
+
 app.use(
   session({
-    store: new SQLiteStore({ db: 'sessions.db', dir: path.join(__dirname, 'data') }),
+    store: new MySQLStore(mysqlSessionOptions),
     secret: process.env.SESSION_SECRET || 'keyboard cat',
     resave: false,
     saveUninitialized: false,

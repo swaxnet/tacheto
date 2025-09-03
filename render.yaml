@@ -14,8 +14,16 @@ services:
         value: change_this_secret
       - key: UPLOAD_DIR
         value: uploads
-      - key: DB_FILE
-        value: data/tacheto.db
+      - key: MYSQL_HOST
+        value: your-mysql-host
+      - key: MYSQL_PORT
+        value: 3306
+      - key: MYSQL_USER
+        value: your-mysql-user
+      - key: MYSQL_PASSWORD
+        value: your-mysql-password
+      - key: MYSQL_DATABASE
+        value: tacheto
       - key: ADMIN_DEFAULT_EMAIL
         value: admin@tacheto.local
       - key: ADMIN_DEFAULT_PASSWORD
