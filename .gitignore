@@ -1,25 +1,3 @@
-# Dependencies
-node_modules/
-
-# Logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# Runtime data
-pids
-*.pid
-*.seed
-*.pid.lock
-
-# Coverage
-coverage/
-
-# Production
-build/
-dist/
-
 # Env
 .env
 .env.local
@@ -32,11 +10,8 @@ Thumbs.db
 .vscode/
 .idea/
 
-# Project uploads
-uploads/
-
-# Lock files
-# keep lockfile committed for reproducible builds
+# PHP uploads
+php/public/uploads/
 
 # Archives
 *.zip
