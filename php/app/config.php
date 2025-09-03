@@ -1,7 +1,7 @@
 <?php
 // App configuration via environment or defaults
 $APP_URL = getenv('APP_URL') ?: '';
-$UPLOAD_DIR = getenv('UPLOAD_DIR') ?: __DIR__ . '/../public/uploads';
+$UPLOAD_DIR = getenv('UPLOAD_DIR') ?: __DIR__ . '/../../uploads';
 
 $MYSQL_HOST = getenv('MYSQL_HOST') ?: '127.0.0.1';
 $MYSQL_PORT = (int)(getenv('MYSQL_PORT') ?: 3306);
