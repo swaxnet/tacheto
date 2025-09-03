@@ -1,0 +1,36 @@
+-- Tacheto schema
+CREATE TABLE IF NOT EXISTS users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  password_hash VARCHAR(255) NOT NULL,
+  role ENUM('admin','viewer') NOT NULL DEFAULT 'admin',
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS schools (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  code VARCHAR(64) UNIQUE NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS results_batches (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  form_level VARCHAR(100) NOT NULL,
+  year INT NOT NULL,
+  title VARCHAR(255) NOT NULL,
+  summary_pdf_path VARCHAR(512) NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_batches_level_year (form_level, year)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS school_results (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  batch_id INT NOT NULL,
+  school_id INT NOT NULL,
+  pdf_path VARCHAR(512) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_school_results_batch (batch_id),
+  CONSTRAINT fk_sr_batch FOREIGN KEY (batch_id) REFERENCES results_batches(id) ON DELETE CASCADE,
+  CONSTRAINT fk_sr_school FOREIGN KEY (school_id) REFERENCES schools(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4; 

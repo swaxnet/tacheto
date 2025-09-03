@@ -1,17 +1,16 @@
 # Env
 .env
-.env.local
 
 # OS
 .DS_Store
 Thumbs.db
 
-# Editor
-.vscode/
-.idea/
+# Vendor/cache
+/vendor/
+/node_modules/
 
-# Uploads at project root
-/uploads/
+# Uploads
+/public/uploads/
 
 # Archives
-*.zip
+*.zip 

@@ -1,0 +1,12 @@
+:root{--bg:#0f172a;--card:#111827;--txt:#e5e7eb;--muted:#94a3b8}
+body{background:var(--bg);color:var(--txt)}
+.navbar.bg-primary{background:#2563eb!important}
+.card{background:var(--card);border:1px solid rgba(255,255,255,.06);border-radius:12px}
+.fade-in{animation:fade .4s ease-in-out}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+a{color:#93c5fd}
+a:hover{text-decoration:underline}
+.form-control,.form-select{background:#0b1220;border:1px solid rgba(255,255,255,.08);color:var(--txt)}
+.btn-primary{background:#2563eb;border-color:#2563eb}
+.table{color:var(--txt)}
+.table thead th{color:#cbd5e1} 
