@@ -11,7 +11,7 @@ RUN npm ci --only=production
 
 # Build runtime image
 FROM base AS runtime
-# Create non-root user
+# Create non-root user (kept for reference, but service runs as root to handle mounted volumes permissions)
 RUN addgroup -S app && adduser -S app -G app
 
 # App directories for persistent data
@@ -27,7 +27,8 @@ COPY . .
 RUN mkdir -p /app/data /app/uploads /app/public /app/public/css \
   && chown -R app:app /app
 
-USER app
+# Do not switch user so startup can manage permissions on mounted volumes
+# USER app
 EXPOSE 3000
 
 # Environment defaults (can be overridden)
@@ -39,4 +40,4 @@ ENV PORT=3000 \
   ADMIN_DEFAULT_PASSWORD=admin123
 
 # Initialize DB if not present on container start, then run server
-CMD ["sh", "-c", "[ -f \"$DB_FILE\" ] || node scripts/init-db.js; node server.js"] 
+CMD ["sh", "-c", "mkdir -p /app/data /app/uploads && chown -R 0:0 /app/data /app/uploads; [ -f \"$DB_FILE\" ] || node scripts/init-db.js; node server.js"] 
