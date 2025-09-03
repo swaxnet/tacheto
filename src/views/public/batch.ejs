@@ -3,7 +3,7 @@
 		<h1><%= batch.title %> - <%= batch.form_level %> (<%= batch.year %>)</h1>
 		<div class="actions">
 			<% if (batch.summary_pdf_path) { %>
-				<a class="btn" target="_blank" href="/<%= batch.summary_pdf_path %>">Fungua Matokeo ya Jumla (PDF)</a>
+				<a class="btn" href="/batch/<%= batch.id %>/summary">Fungua Matokeo ya Jumla (Ndani ya Tovuti)</a>
 				<a class="btn btn-secondary" download href="/<%= batch.summary_pdf_path %>">Pakua Matokeo ya Jumla (PDF)</a>
 			<% } else { %>
 				<span class="muted">Hakuna PDF ya matokeo ya jumla iliyopakiwa.</span>
@@ -34,7 +34,7 @@
 						<td><%= r.school_name %></td>
 						<td><%= r.school_code %></td>
 						<td><div class="actions">
-							<a class="btn btn-sm" target="_blank" href="/<%= r.pdf_path %>">Fungua</a>
+							<a class="btn btn-sm" href="/school-result/<%= r.id %>/view">Fungua (Ndani)</a>
 							<a class="btn btn-sm btn-secondary" download href="/<%= r.pdf_path %>">Pakua</a>
 						</div></td>
 					</tr>
@@ -51,4 +51,5 @@
 			<a href="<%= pagination.nextUrl %>">Ukurasa unaofuata</a>
 		<% } %>
 	</div>
+
 </section> 

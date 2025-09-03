@@ -20,11 +20,10 @@ services:
         value: admin@tacheto.local
       - key: ADMIN_DEFAULT_PASSWORD
         value: admin123
-    disk:
-      name: tacheto-data
-      mountPath: /app/data
-      sizeGB: 1
     disks:
+      - name: tacheto-data
+        mountPath: /app/data
+        sizeGB: 1
       - name: tacheto-uploads
         mountPath: /app/uploads
         sizeGB: 1 

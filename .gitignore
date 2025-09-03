@@ -38,3 +38,6 @@ uploads/
 
 # Lock files
 # keep lockfile committed for reproducible builds
+
+# Archives
+*.zip

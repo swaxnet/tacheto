@@ -76,4 +76,45 @@ router.get('/batch/:id', (req, res) => {
   });
 });
 
+// Inline PDF viewer for batch summary
+router.get('/batch/:id/summary', (req, res) => {
+  const db = getDb();
+  const batchId = req.params.id;
+  db.get('SELECT * FROM results_batches WHERE id = ?', [batchId], (err, batch) => {
+    if (err || !batch) return res.status(404).render('404', { title: 'Haipatikani' });
+    if (!batch.summary_pdf_path) return res.status(404).render('404', { title: 'Haipatikani' });
+    const pdfUrl = '/' + batch.summary_pdf_path.replace(/^\/+/, '');
+    res.render('public/pdf_viewer', {
+      title: `Muhtasari wa Matokeo - ${batch.title}`,
+      pdfUrl,
+      backUrl: `/batch/${batchId}`,
+      downloadUrl: pdfUrl,
+    });
+  });
+});
+
+// Inline PDF viewer for a specific school result
+router.get('/school-result/:id/view', (req, res) => {
+  const db = getDb();
+  const id = req.params.id;
+  db.get(
+    `SELECT sr.*, s.name as school_name, s.code as school_code, b.title as batch_title
+     FROM school_results sr
+     JOIN schools s ON s.id = sr.school_id
+     JOIN results_batches b ON b.id = sr.batch_id
+     WHERE sr.id = ?`,
+    [id],
+    (err, row) => {
+      if (err || !row) return res.status(404).render('404', { title: 'Haipatikani' });
+      const pdfUrl = '/' + String(row.pdf_path || '').replace(/^\/+/, '');
+      res.render('public/pdf_viewer', {
+        title: `Matokeo - ${row.school_name}`,
+        pdfUrl,
+        backUrl: `/batch/${row.batch_id}`,
+        downloadUrl: pdfUrl,
+      });
+    }
+  );
+});
+
 module.exports = router; 
