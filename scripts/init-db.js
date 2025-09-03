@@ -1,13 +1,28 @@
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
-const { getPool } = require('../src/db');
+const mysql = require('mysql2/promise');
 
 (async () => {
-  const pool = getPool();
-  const conn = await pool.getConnection();
+  const MYSQL_HOST = process.env.MYSQL_HOST || 'localhost';
+  const MYSQL_PORT = parseInt(process.env.MYSQL_PORT || '3306', 10);
+  const MYSQL_USER = process.env.MYSQL_USER || 'root';
+  const MYSQL_PASSWORD = process.env.MYSQL_PASSWORD || '';
+  const MYSQL_DATABASE = process.env.MYSQL_DATABASE || 'tacheto';
+
+  let conn;
   try {
-    await conn.query('CREATE DATABASE IF NOT EXISTS ?? CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci', [process.env.MYSQL_DATABASE]);
-    await conn.query('USE ??', [process.env.MYSQL_DATABASE]);
+    // Connect without selecting a database to allow CREATE DATABASE
+    conn = await mysql.createConnection({
+      host: MYSQL_HOST,
+      port: MYSQL_PORT,
+      user: MYSQL_USER,
+      password: MYSQL_PASSWORD,
+      // Optional SSL depending on provider; enable via env if needed
+      ssl: process.env.MYSQL_SSL === 'true' ? { rejectUnauthorized: false } : undefined,
+    });
+
+    await conn.query('CREATE DATABASE IF NOT EXISTS ?? CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci', [MYSQL_DATABASE]);
+    await conn.query('USE ??', [MYSQL_DATABASE]);
 
     await conn.query('SET FOREIGN_KEY_CHECKS=1');
 
@@ -62,7 +77,6 @@ const { getPool } = require('../src/db');
     console.error('Failed to initialize schema:', err);
     process.exit(1);
   } finally {
-    conn.release();
-    pool.end();
+    if (conn) await conn.end();
   }
 })(); 
